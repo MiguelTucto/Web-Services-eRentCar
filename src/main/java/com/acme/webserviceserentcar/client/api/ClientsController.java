@@ -39,7 +39,6 @@ public class ClientsController {
                     ))
     })
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
     public Page<ClientResource> getAllClients(Pageable pageable) {
         return mapper.modelListToPage(clientService.getAll(), pageable);
     }
@@ -53,7 +52,6 @@ public class ClientsController {
                     ))
     })
     @GetMapping("{clientId}")
-    @PreAuthorize("hasRole('USER')")
     public ClientResource getClientById(@PathVariable Long clientId) {
         return mapper.toResource(clientService.getById(clientId));
     }
@@ -67,7 +65,6 @@ public class ClientsController {
                     ))
     })
     @PostMapping
-    @PreAuthorize("hasRole('USER')")
     public ClientResource createClient(@Valid @RequestBody CreateClientResource request) {
         return mapper.toResource(clientService.create(mapper.toModel(request)));
     }
@@ -81,7 +78,6 @@ public class ClientsController {
                     ))
     })
     @PutMapping("{clientId}")
-    @PreAuthorize("hasRole('USER')")
     public ClientResource updateClient(@PathVariable Long clientId, @Valid @RequestBody UpdateClientResource request) {
         return mapper.toResource(clientService.update(clientId, mapper.toModel(request)));
     }
@@ -104,7 +100,6 @@ public class ClientsController {
             @ApiResponse(responseCode = "200", description = "Client Plan deleted", content = @Content(mediaType = "application/json"))
     })
     @DeleteMapping("{clientId}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteClient(@PathVariable Long clientId) {
         return clientService.delete(clientId);
     }

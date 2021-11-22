@@ -10,8 +10,6 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class UpdateRentResource {
-    private long id;
-
     @NotNull
     @NotBlank
     @Size(max = 15)
@@ -22,6 +20,6 @@ public class UpdateRentResource {
     @Size(max = 15)
     private String finishDate;
 
-    @NotBlank
+    @NotNull
     private int amount;
 }

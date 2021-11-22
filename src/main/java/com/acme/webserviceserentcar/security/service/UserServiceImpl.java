@@ -1,6 +1,5 @@
 package com.acme.webserviceserentcar.security.service;
 
-import com.acme.webserviceserentcar.client.domain.model.entity.Client;
 import com.acme.webserviceserentcar.client.domain.persistence.ClientRepository;
 import com.acme.webserviceserentcar.security.domain.model.entity.Role;
 import com.acme.webserviceserentcar.security.domain.model.enumeration.Roles;
@@ -142,16 +141,10 @@ public class UserServiceImpl implements UserService {
                     .withPassword(encoder.encode(request.getPassword()))
                     .withRoles(roles);
 
-            User auxUser;
-            auxUser = userRepository.save(user);
+            userRepository.save(user);
 
             UserResource resource = mapper.map(user, UserResource.class);
             RegisterResponse response = new RegisterResponse(resource);
-
-            // Create a client after create a User
-            Client client = new Client()
-                    .withUser(auxUser);
-            clientRepository.save(client);
 
             return ResponseEntity.ok(response.getResource());
 

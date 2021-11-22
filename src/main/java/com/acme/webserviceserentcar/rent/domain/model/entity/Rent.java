@@ -36,9 +36,10 @@ public class Rent implements Serializable {
     @NotNull
     private int amount;
 
+    @NotNull
     private double rate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     @JsonIgnore
     private Client client;

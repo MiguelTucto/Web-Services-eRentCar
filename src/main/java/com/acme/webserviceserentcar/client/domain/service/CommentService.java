@@ -10,8 +10,8 @@ import java.util.List;
 public interface CommentService {
     List<Comment> getAll();
     Page<Comment> getAll(Pageable pageable);
-    Comment getById(Long clientId);
-    Comment create(Comment request);
-    Comment update(Long clientId, Comment request);
-    ResponseEntity<?> delete(Long clientId);
+    Comment getById(Long id);
+    Comment create(Long clientId, Long clientCommentId, Comment request);
+    Comment update(Long id, Comment request);
+    ResponseEntity<?> delete(Long id);
 }

@@ -45,8 +45,5 @@ public class  Client implements Serializable {
     private Plan plan;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnore
-    private User user;
+    private Long userId;
 }

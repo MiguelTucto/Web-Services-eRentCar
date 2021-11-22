@@ -10,6 +10,7 @@ import lombok.*;
 public class CommentResource {
     private Long id;
     private Long clientId;
+    private Long clientCommentId;
     private String date;
     private int stars;
     private String comment;

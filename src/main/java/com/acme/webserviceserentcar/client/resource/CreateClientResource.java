@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @With
 public class CreateClientResource {
-
     @Size(max = 30)
     private String names;
 
@@ -29,4 +28,6 @@ public class CreateClientResource {
     private int responseTime;
 
     private double rate;
+
+    private Long userId;
 }

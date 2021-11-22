@@ -23,9 +23,14 @@ public class Comment implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "clientId", referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     @JsonIgnore
-    private Client clientCommentId;
+    private Client client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_comment_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Client clientComment;
 
     @NotNull
     @NotBlank

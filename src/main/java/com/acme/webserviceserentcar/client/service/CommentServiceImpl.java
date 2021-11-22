@@ -1,5 +1,6 @@
 package com.acme.webserviceserentcar.client.service;
 
+import com.acme.webserviceserentcar.client.domain.model.entity.Client;
 import com.acme.webserviceserentcar.client.domain.model.entity.Comment;
 import com.acme.webserviceserentcar.client.domain.persistence.ClientRepository;
 import com.acme.webserviceserentcar.client.domain.persistence.CommentRepository;
@@ -41,38 +42,48 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment getById(Long clientId) {
-        return commentRepository.findById(clientId).orElseThrow(() -> new ResourceNotFoundException(ENTITY, clientId));
+    public Comment getById(Long id) {
+        return commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
     }
 
     @Override
-    public Comment create(Comment request) {
+    public Comment create(Long clientId, Long clientCommentId, Comment request) {
         Set<ConstraintViolation<Comment>> violations = validator.validate(request);
 
         if (!violations.isEmpty())
-            throw new ResourceValidationException(ENTITY,violations );
+            throw new ResourceValidationException(ENTITY,violations);
+
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client", clientId));
+
+        request.setClient(client);
+
+        Client clientComment = clientRepository.findById(clientCommentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client", clientCommentId));
+
+        request.setClientComment(clientComment);
 
         return commentRepository.save(request);
     }
 
     @Override
-    public Comment update(Long clientId, Comment request) {
+    public Comment update(Long id, Comment request) {
         Set<ConstraintViolation<Comment>> violations = validator.validate(request);
 
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        return commentRepository.findById(clientId).map(comment ->
+        return commentRepository.findById(id).map(comment ->
                 commentRepository.save(comment.withDate(request.getDate())
                         .withStars(request.getStars())
-                        .withDate(request.getDate()))).orElseThrow(() -> new ResourceNotFoundException(ENTITY, clientId));
+                        .withDate(request.getDate()))).orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
     }
 
     @Override
-    public ResponseEntity<?> delete(Long clientId) {
-        return commentRepository.findById(clientId).map(comment -> {
+    public ResponseEntity<?> delete(Long id) {
+        return commentRepository.findById(id).map(comment -> {
             commentRepository.delete(comment);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, clientId));
+        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
     }
 }

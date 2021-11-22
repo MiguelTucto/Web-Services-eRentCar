@@ -39,7 +39,6 @@ public class RentController {
                     ))
     })
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
     public Page<RentResource> getAllRents(Pageable pageable) {
         return mapper.modelListToPage(rentService.getAll(), pageable);
     }
@@ -54,7 +53,6 @@ public class RentController {
                     ))
     })
     @GetMapping("{rentId}")
-    @PreAuthorize("hasRole('USER')")
     public RentResource getRentById(@PathVariable Long rentId) {
         return mapper.toResource(rentService.getById(rentId));
     }
@@ -69,7 +67,6 @@ public class RentController {
                     ))
     })
     @PostMapping("client/{clientId}/car/{carId}")
-    @PreAuthorize("hasRole('USER')")
     public RentResource createRent(@PathVariable Long clientId,
                                    @PathVariable Long carId,
                                    @Valid @RequestBody CreateRentResource request) {
@@ -86,7 +83,6 @@ public class RentController {
                     ))
     })
     @PutMapping("{rentId}")
-    @PreAuthorize("hasRole('USER')")
     public RentResource updateRent(@PathVariable Long rentId, @Valid @RequestBody UpdateRentResource request) {
         return mapper.toResource(rentService.update(rentId, mapper.toModel(request)));
     }
@@ -97,7 +93,6 @@ public class RentController {
             @ApiResponse(responseCode = "200", description = "Rent deleted", content = @Content(mediaType = "application/json"))
     })
     @DeleteMapping("{rentId}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteRent(@PathVariable Long rentId) {
         return rentService.delete(rentId);
     }

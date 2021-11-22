@@ -37,7 +37,6 @@ public class CarBrandController {
                     ))
     })
     @GetMapping
-    //@PreAuthorize("hasRole('USER')")
     public Page<CarBrandResource> getAllCarBrands(Pageable pageable) {
         return mapper.modelListToPage(carBrandService.getAll(), pageable);
     }
@@ -51,7 +50,6 @@ public class CarBrandController {
                     ))
     })
     @GetMapping("{carBrandId}")
-    @PreAuthorize("hasRole('USER')")
     public CarBrandResource getCarBrandById(@PathVariable Long carBrandId) {
         return mapper.toResource(carBrandService.getById(carBrandId));
     }
@@ -65,7 +63,6 @@ public class CarBrandController {
                     ))
     })
     @PostMapping()
-    //@PreAuthorize("hasRole('USER')")
     public CarBrandResource createCarBrand(@Valid @RequestBody CreateCarBrandResource request) {
         return mapper.toResource(carBrandService.create(mapper.toModel(request)));
     }
@@ -79,7 +76,6 @@ public class CarBrandController {
                     ))
     })
     @PutMapping("{carBrandId}")
-    @PreAuthorize("hasRole('USER')")
     public CarBrandResource updateCarBrand(@PathVariable Long carBrandId, @Valid @RequestBody UpdateCarBrandResource request) {
         return mapper.toResource(carBrandService.update(carBrandId, mapper.toModel(request)));
     }
@@ -90,7 +86,6 @@ public class CarBrandController {
                     content = @Content(mediaType = "application/json"))
     })
     @DeleteMapping("{carBrandId}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteCarBrand(@PathVariable Long carBrandId) {
         return carBrandService.delete(carBrandId);
     }

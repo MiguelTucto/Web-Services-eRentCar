@@ -45,7 +45,6 @@ public class FavouriteController {
                     ))
     })
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
     public Page<FavouriteResource> getAllFavourite(Pageable pageable) {
         return mapper.modelListToPage(favouriteService.getAll(), pageable);
     }
@@ -59,7 +58,6 @@ public class FavouriteController {
                     ))
     })
     @GetMapping("{favouriteId}")
-    @PreAuthorize("hasRole('USER')")
     public FavouriteResource getFavouriteById(@PathVariable Long favouriteId) {
         return mapper.toResource(favouriteService.getById(favouriteId));
     }
@@ -73,7 +71,6 @@ public class FavouriteController {
                     ))
     })
     @GetMapping("client/{clientId}")
-    @PreAuthorize("hasRole('USER')")
     public Page<FavouriteResource> getAllFavouritesByClientId(@PathVariable Long clientId, Pageable pageable) {
         return favouriteService.getAllFavouritesByClientId(clientId, pageable).map(mapper::toResource);
     }
@@ -88,7 +85,6 @@ public class FavouriteController {
                     ))
     })
     @PostMapping("client/{clientId}/car/{carId}")
-    @PreAuthorize("hasRole('USER')")
     public FavouriteResource createFavourite(@PathVariable Long clientId,
                                              @PathVariable Long carId,
                                              @Valid @RequestBody CreateFavouriteResource request) {
@@ -104,7 +100,6 @@ public class FavouriteController {
                     ))
     })
     @DeleteMapping("{favouriteId}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteFavourite(@PathVariable Long favouriteId) {
         return favouriteService.delete(favouriteId); }
 }

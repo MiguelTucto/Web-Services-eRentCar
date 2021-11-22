@@ -6,7 +6,7 @@ Feature: Car Adding
     Background:
       Given The Endpoint "http://localhost:8080/api/v1/cars" is available for cars
 
-    @plan-adding
+    @car-adding
     Scenario: Add Car
       When A Car Request is sent with values "1011 C Alfredo Salazar San Isidro", "Toyota", 2012, "Focus", 90000, 4, 11000, "The Paint on the car is new", 4, 45
       Then A Response with Status 200 is received for the car

@@ -40,7 +40,6 @@ public class CarController {
                     ))
     })
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
     public Page<CarResource> getAllCars(Pageable pageable) {
         return mapper.modelListToPage(carService.getAll(), pageable);
     }
@@ -54,7 +53,6 @@ public class CarController {
                     ))
     })
     @GetMapping("client/{clientId}")
-    @PreAuthorize("hasRole('USER')")
     public Page<CarResource> getAllCarsByClientId(@PathVariable Long clientId, Pageable pageable) {
         return carService.getAllCarsByClientId(clientId, pageable).map(mapper::toResource);
     }
@@ -68,7 +66,6 @@ public class CarController {
                     ))
     })
     @GetMapping("{carId}")
-    @PreAuthorize("hasRole('USER')")
     public CarResource getCarById(@PathVariable Long carId) {
         return mapper.toResource(carService.getById(carId));
     }
@@ -82,7 +79,6 @@ public class CarController {
                     ))
     })
     @PostMapping("client/{clientId}/car-model/{carModelId}")
-    @PreAuthorize("hasRole('USER')")
     public CarResource createCar(@PathVariable Long clientId,
                                  @PathVariable Long carModelId,
                                  @Valid @RequestBody CreateCarResource request) {
@@ -98,7 +94,6 @@ public class CarController {
                     ))
     })
     @PutMapping("{carId}")
-    @PreAuthorize("hasRole('USER')")
     public CarResource updateCar(@PathVariable Long carId, @Valid @RequestBody UpdateCarResource request) {
         return mapper.toResource(carService.update(carId, mapper.toModel(request)));
     }
@@ -112,7 +107,6 @@ public class CarController {
                     ))
     })
     @PutMapping("{carId}/rate/{rate}")
-    @PreAuthorize("hasRole('USER')")
     public CarResource updateCarRate(@PathVariable Long carId, @PathVariable int rate) {
         return mapper.toResource(carService.updateRate(carId, rate));
     }
@@ -123,7 +117,6 @@ public class CarController {
                     content = @Content(mediaType = "application/json"))
     })
     @DeleteMapping("{carId}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteCar(@PathVariable Long carId) {
         return carService.delete(carId);
     }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/v1/clientsComments")
+@RequestMapping("api/v1/comments")
 public class CommentsController {
     private final CommentService commentService;
     private final CommentMapper mapper;
@@ -41,7 +41,6 @@ public class CommentsController {
             ))
     })
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
     public Page<CommentResource> getAllComments(Pageable pageable) {
         return mapper.modelListToPage(commentService.getAll(), pageable);
     }
@@ -54,10 +53,9 @@ public class CommentsController {
             schema = @Schema(implementation = CommentResource.class)
             ))
     })
-    @GetMapping("{commentId}")
-    @PreAuthorize("hasRole('USER')")
-    public CommentResource getCommentById(@PathVariable Long commentId) {
-        return mapper.toResource(commentService.getById(commentId));
+    @GetMapping("{id}")
+    public CommentResource getCommentById(@PathVariable Long id) {
+        return mapper.toResource(commentService.getById(id));
     }
 
     @Operation(summary = "Create Comment", description = "Create Comment", tags = {"Comments"})
@@ -68,10 +66,9 @@ public class CommentsController {
                             schema = @Schema(implementation = CommentResource.class)
                     ))
     })
-    @PostMapping
-    @PreAuthorize("hasRole('USER')")
-    public CommentResource createComment(@Valid @RequestBody CreateCommentResource request) {
-        return mapper.toResource(commentService.create(mapper.toModel(request)));
+    @PostMapping("client/{clientId}/client-comment/{clientCommentId}")
+    public CommentResource createComment(@PathVariable Long clientId, @PathVariable Long clientCommentId, @Valid @RequestBody CreateCommentResource request) {
+        return mapper.toResource(commentService.create(clientId, clientCommentId, mapper.toModel(request)));
     }
 
     @Operation(summary = "Update Comment", description = "Update Comment", tags = {"Comments"})
@@ -82,19 +79,17 @@ public class CommentsController {
                     schema = @Schema(implementation = CommentResource.class)
             ))
     })
-    @PutMapping("{commentId}")
-    @PreAuthorize("hasRole('USER')")
-    public CommentResource updateComment(@PathVariable Long commentId, @Valid @RequestBody UpdateCommentResource request) {
-        return mapper.toResource(commentService.update(commentId, mapper.toModel(request)));
+    @PutMapping("{id}")
+    public CommentResource updateComment(@PathVariable Long id, @Valid @RequestBody UpdateCommentResource request) {
+        return mapper.toResource(commentService.update(id, mapper.toModel(request)));
     }
 
     @Operation(summary = "Delete Comment", description = "Delete Comment", tags = {"Comments"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Comment was deleted", content = @Content(mediaType = "application/json"))
     })
-    @DeleteMapping("{commentId}")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> deleteComment(@PathVariable Long commentId) {
-        return commentService.delete(commentId);
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteComment(@PathVariable Long id) {
+        return commentService.delete(id);
     }
 }
