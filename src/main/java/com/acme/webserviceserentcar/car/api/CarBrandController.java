@@ -37,7 +37,7 @@ public class CarBrandController {
                     ))
     })
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
+    //@PreAuthorize("hasRole('USER')")
     public Page<CarBrandResource> getAllCarBrands(Pageable pageable) {
         return mapper.modelListToPage(carBrandService.getAll(), pageable);
     }
@@ -65,7 +65,7 @@ public class CarBrandController {
                     ))
     })
     @PostMapping()
-    @PreAuthorize("hasRole('USER')")
+    //@PreAuthorize("hasRole('USER')")
     public CarBrandResource createCarBrand(@Valid @RequestBody CreateCarBrandResource request) {
         return mapper.toResource(carBrandService.create(mapper.toModel(request)));
     }

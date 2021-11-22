@@ -23,7 +23,7 @@ public class JwtHandler implements Serializable {
 
     public String generateToken(Authentication authentication) {
 
-        String subject = ((UserDetailsImpl) authentication.getPrincipal()).getUsername();
+        String subject = ((UserDetailsImpl) authentication.getPrincipal()).getEmail();
 
         Date issuedAt = new Date();
 

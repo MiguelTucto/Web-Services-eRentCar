@@ -63,10 +63,10 @@ public class UserServiceImpl implements UserService {
     EnhancedModelMapper mapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(
-                        String.format("User not found with username: %s", username)));
+                        String.format("Email not found with email: %s", email)));
         return UserDetailsImpl.build(user);
     }
 
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            request.getUsername(), request.getPassword()));
+                            request.getEmail(), request.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = handler.generateToken(authentication);
