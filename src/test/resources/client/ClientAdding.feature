@@ -8,6 +8,6 @@ Feature: Client Adding
 
   @client-adding
   Scenario: Add Client
-    When A Client Request is sent with values "Juan", "Perez", "San isidro", 987654321, 4, 4, 4, "juan@gmail.com", "Juan12345"
+    When A Client Request is sent with values "Juan", "Perez", "San isidro", 987654321, 4, 4, 4
     Then A Response with Status 200 is received for the client
-    And A Client Resource with values "Juan", "Perez", "San isidro", 987654321, 4, 4, 4, "juan@gmail.com", "Juan12345"
+    And A Client Resource with values "Juan", "Perez", "San isidro", 987654321, 4, 4, 4

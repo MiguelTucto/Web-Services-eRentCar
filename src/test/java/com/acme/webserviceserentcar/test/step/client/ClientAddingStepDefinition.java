@@ -34,8 +34,8 @@ public class ClientAddingStepDefinition {
         this.endPointPath = String.format("http://localhost:%d/api/v1/clients", randomServerPort);
     }
 
-    @When("A Client Request is sent with values {string}, {string}, {string}, {int}, {int}, {int}, {int}, {string}, {string}")
-    public void aClientRequestIsSentWithValues(String names, String lastNames, String address, int cellphoneNumber, int averageResponsibility, int responseTime, int rate, String email, String password) {
+    @When("A Client Request is sent with values {string}, {string}, {string}, {int}, {int}, {int}, {int}")
+    public void aClientRequestIsSentWithValues(String names, String lastNames, String address, int cellphoneNumber, int averageResponsibility, int responseTime, int rate) {
         CreateClientResource resource = new CreateClientResource()
                 .withNames(names)
                 .withLastNames(lastNames)
@@ -56,8 +56,8 @@ public class ClientAddingStepDefinition {
         assertThat(expectedStatusCode).isEqualTo(actualStatusCode);
     }
 
-    @And("A Client Resource with values {string}, {string}, {string}, {int}, {int}, {int}, {int}, {string}, {string}")
-    public void aClientResourceWithValues(String names, String lastNames, String address, int cellphoneNumber, int averageResponsibility, int responseTime, int rate, String email, String password) {
+    @And("A Client Resource with values {string}, {string}, {string}, {int}, {int}, {int}, {int}")
+    public void aClientResourceWithValues(String names, String lastNames, String address, int cellphoneNumber, int averageResponsibility, int responseTime, int rate) {
         ClientResource expectedResource = new ClientResource()
                 .withNames(names)
                 .withLastNames(lastNames)
